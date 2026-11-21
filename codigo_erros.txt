@@ -1,0 +1,6 @@
+func int calcular(int x) {
+  var int resultado = x;
+  var int resultado = x;
+  z = 10;
+  return resultado;
+}
