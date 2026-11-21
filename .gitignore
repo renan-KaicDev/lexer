@@ -1,0 +1,17 @@
+# Arquivos gerados na compilação e pelo ANTLR
+/build/
+*.class
+*.interp
+*.tokens
+
+# Saídas do lexer e do parser
+/resultado/
+/tokens.tsv
+
+# Executável compilado do lexer
+/lexer_aluno
+/lexer/lexer_aluno
+
+# Arquivos temporários comuns
+*~
+.DS_Store
