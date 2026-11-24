@@ -156,24 +156,25 @@ exprStmt
 // -----------------------------------------------------------------
 // 3 & 4. EXPRESSÕES — Aritméticas e Relacionais
 //
-//  Precedência (menor → maior):
-//    || (or)
-//    && (and)
-//    == != (igualdade)
-//    < > <= >= (relacional)
-//    + - (aditivo)
-//    * / % (multiplicativo)
+//  Precedência (maior → menor). No ANTLR, em regras recursivas à
+//  esquerda, a PRIMEIRA alternativa tem a MAIOR precedência:
 //    ! - (unário)
+//    * / % (multiplicativo)
+//    + - (aditivo)
+//    < > <= >= (relacional)
+//    == != (igualdade)
+//    and
+//    or
 //    () chamada de função, literais, identificadores
 // -----------------------------------------------------------------
 expr
-    : expr KW_OR expr                           # logicalOr
-    | expr KW_AND expr                          # logicalAnd
-    | expr ('==' | '!=') expr                   # equality
-    | expr ('<' | '>' | '<=' | '>=') expr       # relational
-    | expr ('+' | '-') expr                     # additive
+    : ('!' | '-') expr                          # unary
     | expr ('*' | '/' | '%') expr               # multiplicative
-    | ('!' | '-') expr                          # unary
+    | expr ('+' | '-') expr                     # additive
+    | expr ('<' | '>' | '<=' | '>=') expr       # relational
+    | expr ('==' | '!=') expr                   # equality
+    | expr KW_AND expr                          # logicalAnd
+    | expr KW_OR expr                           # logicalOr
     | ID '(' argList? ')'                       # funcCall
     | '(' expr ')'                              # parens
     | ID                                        # identifier

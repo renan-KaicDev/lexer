@@ -1,17 +1,20 @@
-# Arquivos gerados na compilação e pelo ANTLR
-/build/
+# ── Build: gerado pelo gcc e pelo ANTLR ───────────────────────────
+build/
+
+# ── Saídas de execução ────────────────────────────────────────────
+resultado/
+
+# ── Artefatos soltos (legado) ─────────────────────────────────────
 *.class
 *.interp
 *.tokens
+tokens.tsv
+tabela_gerada.txt
+tabela_saida.txt
 
-# Saídas do lexer e do parser
-/resultado/
-/tokens.tsv
+# ── Executável compilado do lexer ─────────────────────────────────
+src/lexer/lexer_aluno
 
-# Executável compilado do lexer
-/lexer_aluno
-/lexer/lexer_aluno
-
-# Arquivos temporários comuns
+# ── Temporários do SO ─────────────────────────────────────────────
 *~
 .DS_Store
