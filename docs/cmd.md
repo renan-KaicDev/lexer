@@ -36,6 +36,11 @@ gcc -std=c11 -Wall -Wextra -pedantic src/lexer/lexer_aluno.c -o build/lexer_alun
 
 Gera os arquivos Java do parser, com suporte a Visitor.
 
+> **Nota:** o ANTLR espelha o caminho do arquivo `.g4` dentro do diretório `-o`.
+> Como o arquivo está em `grammar/LexScript.g4`, os fontes Java ficam em
+> `build/antlr/grammar/` e o arquivo de vocabulário fica em
+> `build/antlr/grammar/LexScript.tokens`.
+
 ```bash
 java -jar "$ANTLR_JAR" -Dlanguage=Java -visitor -o build/antlr grammar/LexScript.g4
 ```
@@ -46,7 +51,7 @@ Compila de uma só vez o parser gerado, o `TokenFileParser` e a análise semânt
 
 ```bash
 javac -cp "$ANTLR_JAR" -d build/classes \
-  build/antlr/*.java \
+  build/antlr/grammar/*.java \
   src/semantic/TokenFileParser.java \
   src/semantic/TabelaDeSimbolos.java \
   src/semantic/SemanticVisitor.java \
@@ -61,7 +66,7 @@ Gera `resultado/arvore.txt`.
 
 ```bash
 java -cp "build/classes:$ANTLR_JAR" TokenFileParser \
-  resultado/tokens.tsv build/antlr/LexScript.tokens resultado/arvore.txt
+  resultado/tokens.tsv build/antlr/grammar/LexScript.tokens resultado/arvore.txt
 ```
 
 ### 5.2 Análise semântica
@@ -70,7 +75,7 @@ java -cp "build/classes:$ANTLR_JAR" TokenFileParser \
 
 ```bash
 java -cp "build/classes:$ANTLR_JAR" SemanticMain \
-  resultado/tokens.tsv build/antlr/LexScript.tokens
+  resultado/tokens.tsv build/antlr/grammar/LexScript.tokens
 ```
 
 **Código com erros semânticos** (declaração duplicada e uso antes da declaração):
@@ -78,7 +83,7 @@ java -cp "build/classes:$ANTLR_JAR" SemanticMain \
 ```bash
 ./build/lexer_aluno examples/codigo_erros.txt resultado/tokens_erros.tsv
 java -cp "build/classes:$ANTLR_JAR" SemanticMain \
-  resultado/tokens_erros.tsv build/antlr/LexScript.tokens
+  resultado/tokens_erros.tsv build/antlr/grammar/LexScript.tokens
 ```
 
 ## 6. Ver resultados
@@ -93,7 +98,7 @@ cat resultado/arvore.txt
 | Arquivo | Descrição |
 |---|---|
 | `build/lexer_aluno` | Executável do lexer |
-| `build/antlr/` | Parser/Visitor gerados pelo ANTLR |
+| `build/antlr/grammar/` | Parser/Visitor gerados pelo ANTLR |
 | `build/classes/` | Classes Java compiladas |
 | `resultado/tokens.tsv` | Tokens do código válido |
 | `resultado/tokens_erros.tsv` | Tokens do código com erros |
